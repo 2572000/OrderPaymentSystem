@@ -1,0 +1,41 @@
+# For more info on HTTP files go to https://aka.ms/vs/httpfile
+@BaseUrl=https://localhost:7060
+
+
+@orderId =  1
+### 
+GET {{baseUrl}}/api/order/1
+
+### 
+POST {{baseUrl}}/api/order
+Content-Type: application/json
+
+{
+  "customerId":1,
+  "items": [
+    {
+      "productId":1,
+      "quantity": 2,
+      "unitPrice": 19.99
+    },
+    {
+      "productId":2,
+      "quantity": 1,
+      "unitPrice": 49.99
+    }
+  ],
+  "totalAmount": 89.97
+}
+
+###
+POST {{baseUrl}}/api/order/1/payment
+content-Type: application/json
+
+{
+  "paymentMethod": "CreditCard",
+  "cardNumber": "****1234",
+  "cardHolderName": "John Doe"
+}
+
+###
+DELETE {{baseUrl}}/api/orders/{{orderId}}

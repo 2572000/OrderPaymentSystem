@@ -1,0 +1,3 @@
+# .dockerignore contents
+**/bin
+**/obj
