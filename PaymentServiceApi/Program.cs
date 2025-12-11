@@ -1,4 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using PaymentServiceApi.Data;
 using System.Text.Json.Serialization;
 
 namespace PaymentServiceApi
@@ -14,6 +16,10 @@ namespace PaymentServiceApi
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             });
 
+            builder.Services.AddDbContext<AppDbContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
 
 
             var app = builder.Build();
