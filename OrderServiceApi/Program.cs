@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using OrderServiceApi.Data;
 using OrderServiceApi.Repositories;
 using OrderServiceApi.Services;
+using Serilog;
 using System.Text.Json.Serialization;
 
 namespace OrderServiceApi
@@ -28,6 +29,20 @@ namespace OrderServiceApi
                 options.BaseAddress = new Uri(builder.Configuration["PaymentService:BaseUrl"]!);
             });
 
+
+            #region Serilog Configurations
+
+            //builder.Services.AddSerilog();
+            //install package Serilog.AspNetCore && Serilog.Sinks.Seq
+
+            builder.Host.UseSerilog((context,  loggerConfiguration) => loggerConfiguration
+                .ReadFrom.Configuration(builder.Configuration)
+                );
+
+
+            #endregion
+
+
             var app = builder.Build();
 
             #region Aplay Migrations
@@ -39,7 +54,7 @@ namespace OrderServiceApi
 
             app.MapControllers();
 
-            app.MapGet("/", () => "Hello World!");
+            app.UseSerilogRequestLogging();
 
             app.Run();
         }

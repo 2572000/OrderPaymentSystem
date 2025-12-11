@@ -2,16 +2,16 @@
 @BaseUrl=https://localhost:7060
 
 
-@orderId =  3
+@orderId =  1002
 ### 
-GET {{baseUrl}}/api/order/3
+GET {{baseUrl}}/api/order/1003
 
 ### 
 POST {{baseUrl}}/api/order
 Content-Type: application/json
 
 {
-  "customerId":2,
+  "customerId":5,
   "items": [
     {
       "productId":1,
@@ -28,7 +28,7 @@ Content-Type: application/json
 }
 
 ###
-POST {{baseUrl}}/api/order//payment
+POST {{baseUrl}}/api/order/1003/payment
 content-Type: application/json
 
 {

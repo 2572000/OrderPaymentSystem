@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using PaymentServiceApi.Data;
+using Serilog;
 using System.Text.Json.Serialization;
 
 namespace PaymentServiceApi
@@ -21,14 +22,21 @@ namespace PaymentServiceApi
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
+            #region Serilog Configurations
+
+            builder.Host.UseSerilog((context, loggerConfiguration) => loggerConfiguration
+                .ReadFrom.Configuration(builder.Configuration)
+                );
+
+
+            #endregion
 
             var app = builder.Build();
 
 
             app.MapControllers();
 
-            app.MapGet("/", () => "Hello World!");
-
+            app.UseSerilogRequestLogging();
 
 
             app.Run();

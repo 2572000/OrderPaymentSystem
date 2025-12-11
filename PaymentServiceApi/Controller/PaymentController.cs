@@ -26,16 +26,16 @@ namespace PaymentServiceApi.Controller
                     return BadRequest("Invalid payment request.");
                 }
 
-                if(string.IsNullOrWhiteSpace(configuration["PaymentGateway:ApiKey"]))
+                if(string.IsNullOrWhiteSpace(configuration["PaymentGateway:ApiKey"])) //PaymentGateway
                 {
                     logger.LogError("Payment gateway configuration is missing. Payment fild for This OrderId:{OrderId}",
                         request.OrderId);
                     throw new InvalidOperationException("Payment gateway configuration is missing.");
                 }
-                ;
+                
 
                
-                if (Random.Shared.NextDouble() > 0.1)
+                if (Random.Shared.NextDouble() < 0.1)
                 {
                     logger.LogWarning("Payment processing failed for OrderId: {OrderId}", request.OrderId);
                     return StatusCode(502, new { Message = "Payment processing failed." });
